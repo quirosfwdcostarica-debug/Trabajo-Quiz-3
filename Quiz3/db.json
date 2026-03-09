@@ -1,0 +1,49 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Shogun Admin",
+      "email": "admin@dojo.com",
+      "password": "admin",
+      "role": "admin"
+    },
+    {
+      "id": "3fe3",
+      "name": "Aaron",
+      "email": "loren@gmail.com",
+      "password": "Loscatos0031",
+      "role": "cliente"
+    },
+    {
+      "id": "f3c6",
+      "name": "Aaron",
+      "email": "quirosfwd@gmail.com",
+      "password": "Loscatos0031",
+      "role": "admin"
+    }
+  ],
+  "products": [
+    {
+      "id": "2725",
+      "name": "Wakisashi",
+      "price": "2000",
+      "description": "El wakizashi es una espada corta japonesa tradicional (30-60 cm) utilizada por los samuráis como arma de respaldo o en interiores, a menudo emparejada con la katana larga (más de 60 cm) en el conjunto daishō. Esta combinación, esencial en el periodo Edo, simbolizaba el honor samurái y permitía la defensa en espacios cerrados donde la katana era inmanejable.",
+      "imageUrl": "https://katana-sword.com/cdn/shop/articles/Wakizashi_vs_Katana.png?v=1744682128"
+    },
+    {
+      "id": "10b6",
+      "name": "Uchigatana",
+      "price": "2600",
+      "description": "La Uchigatana (打刀) es una espada japonesa histórica, precursora directa de la katana, caracterizada por ser más ligera, curva y diseñada para un desenfunde rápido con el filo hacia arriba, usada principalmente entre los siglos XIV y XVI. Es el \"alma del samurái\", con una longitud de hoja entre 60 y 90 cm, ideal para el combate a pie. ",
+      "imageUrl": "https://www.swordsofnorthshire.com/cdn/shop/files/uchigatana0.jpg?v=1712274439&width=1200"
+    },
+    {
+      "id": "421a",
+      "name": "Tachi",
+      "price": "2300",
+      "description": "El tachi es el predecesor de la katana moderna, diseñado originalmente para el combate a caballo durante los periodos Heian y Kamakura (900-1596). Aunque ambas son espadas japonesas curvas de un solo filo, se distinguen principalmente por su longitud, curvatura y la forma en que se portaban en el campo de batalla.",
+      "imageUrl": "https://espadasymas.com/cdn/shop/articles/imagen_2025-12-25_203106353.png?v=1766705705&width=1024"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
