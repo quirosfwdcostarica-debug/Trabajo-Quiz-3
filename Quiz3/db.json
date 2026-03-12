@@ -20,6 +20,13 @@
       "email": "quirosfwd@gmail.com",
       "password": "Loscatos0031",
       "role": "admin"
+    },
+    {
+      "id": "70c0",
+      "name": "Aaron",
+      "email": "loren@gmail.com",
+      "password": "Loscatos0031",
+      "role": "cliente"
     }
   ],
   "products": [

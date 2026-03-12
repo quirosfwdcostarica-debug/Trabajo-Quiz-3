@@ -1,8 +1,17 @@
 import { useEffect, useState } from 'react';
 import '../Styles/sakura.css';
 
+interface Petal {
+  id: number;
+  left: string;
+  animationDuration: string;
+  animationDelay: string;
+  width: string;
+  height: string;
+}
+
 export const Sakura = () => {
-  const [petals, setPetals] = useState([]);
+  const [petals, setPetals] = useState<Petal[]>([]);
 
   useEffect(() => {
     const newPetals = Array.from({ length: 30 }).map((_, i) => ({

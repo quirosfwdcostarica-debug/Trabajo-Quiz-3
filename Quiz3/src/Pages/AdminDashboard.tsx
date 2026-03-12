@@ -1,17 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, CSSProperties } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProducts, deleteProduct, updateProduct, createProduct } from '../Services/api';
 
+interface Product {
+  id: number;
+  name: string;
+  price: number | string;
+  description: string;
+  imageUrl: string;
+}
+
+interface User {
+  role: string;
+}
+
 const AdminDashboard = () => {
-  const [products, setProducts] = useState([]);
-  const [editingId, setEditingId] = useState(null);
-  // Añadimos imageUrl al estado inicial
+  const [products, setProducts] = useState<Product[]>([]);
+  const [editingId, setEditingId] = useState<number | null>(null);
   const [formData, setFormData] = useState({ name: '', price: '', description: '', imageUrl: '' });
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user || user.role !== 'admin') {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const user: User = JSON.parse(userString);
+      if (!user || user.role !== 'admin') {
+        navigate('/login');
+        return;
+      }
+    } else {
       navigate('/login');
       return;
     }
@@ -23,29 +40,37 @@ const AdminDashboard = () => {
     setProducts(data);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number) => {
     await deleteProduct(id);
     loadProducts();
   };
 
-  const handleEdit = (product) => {
+  const handleEdit = (product: Product) => {
     setEditingId(product.id);
-    setFormData(product);
+    setFormData({
+      name: product.name,
+      price: String(product.price),
+      description: product.description,
+      imageUrl: product.imageUrl,
+    });
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const productData = {
+      ...formData,
+      price: parseFloat(formData.price) || 0,
+    };
     if (editingId) {
-      await updateProduct(editingId, formData);
+      await updateProduct(editingId, productData);
       setEditingId(null);
     } else {
-      await createProduct(formData);
+      await createProduct(productData);
     }
-    // Limpiamos el formulario incluyendo la imagen
     setFormData({ name: '', price: '', description: '', imageUrl: '' });
     loadProducts();
   };
@@ -66,15 +91,13 @@ const AdminDashboard = () => {
         <input name="name" value={formData.name} onChange={handleChange} placeholder="Nombre del arma" required style={styles.input} />
         <input name="price" type="number" value={formData.price} onChange={handleChange} placeholder="Precio en Yenes" required style={styles.input} />
         <input name="description" value={formData.description} onChange={handleChange} placeholder="Descripción de la reliquia" required style={styles.input} />
-        {/* Nuevo input para la imagen */}
         <input name="imageUrl" value={formData.imageUrl} onChange={handleChange} placeholder="URL de la imagen (http://...)" required style={styles.input} />
         <button type="submit" style={styles.btn}>{editingId ? 'Forjar Modificación' : 'Añadir Nueva Arma'}</button>
       </form>
 
       <div style={styles.grid}>
-        {products.map(p => (
+        {products.map((p: Product) => (
           <div key={p.id} style={styles.card}>
-            {/* Etiqueta de imagen añadida aquí */}
             {p.imageUrl && <img src={p.imageUrl} alt={p.name} style={styles.image} />}
             <h3>{p.name}</h3>
             <p style={{color: '#ffb7c5', fontWeight: 'bold'}}>¥{p.price}</p>
@@ -90,7 +113,7 @@ const AdminDashboard = () => {
   );
 };
 
-const styles = {
+const styles: { [key: string]: CSSProperties } = {
   container: { padding: '2rem', color: 'white', fontFamily: 'sans-serif', maxWidth: '1000px', margin: '0 auto' },
   header: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', borderBottom: '1px solid #ffb7c5', paddingBottom: '1rem' },
   form: { display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '2rem', backgroundColor: 'rgba(0,0,0,0.6)', padding: '1.5rem', borderRadius: '8px' },
